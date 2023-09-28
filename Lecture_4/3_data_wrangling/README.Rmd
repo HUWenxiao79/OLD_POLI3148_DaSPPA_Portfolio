@@ -162,26 +162,19 @@ select(country_name, country_id, year, e_gdp, e_gdppc)
 d_gdp
 ```
 
-```{r}
- d_gdp <- d |>
-  select(country_name, country_id, year, e_gdp, e_gdppc)
-```
-
 ### 3. Rename Column to make names informative
 
 ```{r}
 d_gdp |>
-  rename("GDP" = "e_gdp", "GDP_per_capita" = "e_gdppc", "country" = "country_name", "ID" = "country_id", "Year" = "year")
+  rename("GDP"="e_gdp", "GDP_per_capita" ="e_gdppc", "country" = "country_name", "ID"="country_id", "Year" = "year")
+print(d_gdp)
 ```
 
 ```{r}
-d_gdp <- d_gdp |>
-  rename("GDP" = "e_gdp", "GDP_per_capita" = "e_gdppc", "country" = "country_name", "ID" = "country_id", "Year" = "year")
-```
-
-```{r}
-d_gdp <- d_gdp |>
-  rename("GDP_per_capita"="GDP per capita")
+library(dplyr)
+d_gdp <- d_gdp %>%
+  rename( "GDP"="e_gdp", "GDP_per_capita" ="e_gdppc", "country" = "country_name", "ID"="country_id", "Year" = "year")
+print(d_gdp)
 ```
 
 ### 4. slice rows
@@ -189,7 +182,7 @@ d_gdp <- d_gdp |>
 ```{r}
 # want countries-years with 
 d_gdp |>
-  slice_max(order_by = GDP, n=10)
+  slice_max(order_by= GDP , n=10)
 ```
 
 ```{r}
@@ -216,7 +209,6 @@ d_gdp |>
 ```
 
 ```{r}
-
 d_gdp |> filter(Year >= 2000 & Year <= 2005|country == "China")
 ```
 
