@@ -351,7 +351,7 @@ display: none;
 
 <h1 class="title toc-ignore">Data Wrangling (1)</h1>
 <h4 class="author">Haohan Chen</h4>
-<h4 class="date">Last update: September 28, 2023</h4>
+<h4 class="date">Last update: 九月 28, 2023</h4>
 
 </div>
 
@@ -503,14 +503,16 @@ later lectures.</em></p>
 <h3>0. Load the <code>tidyverse</code> Packages</h3>
 <p>This section loads the packages we need in this lecture.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.5 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2 
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.3.9000     ✔ readr     2.1.4     
+## ✔ forcats   1.0.0          ✔ stringr   1.5.0     
+## ✔ ggplot2   3.4.3          ✔ tibble    3.2.1     
+## ✔ lubridate 1.9.2          ✔ tidyr     1.3.0     
+## ✔ purrr     1.0.2          
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 <div id="import-and-export-the-v-dem-data" class="section level3">
 <h3>1. Import and Export the V-Dem Data</h3>
@@ -526,6 +528,370 @@ information</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>getwd()</p>
+</div>
+<div id="select-economic-development-indicators" class="section level3">
+<h3>2. Select economic development indicators</h3>
+<p>First, we look at the identifiers of the data.</p>
+<pre class="r"><code>names(d)</code></pre>
+<pre><code>##   [1] &quot;country_name&quot;                &quot;country_text_id&quot;            
+##   [3] &quot;country_id&quot;                  &quot;year&quot;                       
+##   [5] &quot;historical_date&quot;             &quot;project&quot;                    
+##   [7] &quot;historical&quot;                  &quot;histname&quot;                   
+##   [9] &quot;codingstart&quot;                 &quot;codingend&quot;                  
+##  [11] &quot;codingstart_contemp&quot;         &quot;codingend_contemp&quot;          
+##  [13] &quot;codingstart_hist&quot;            &quot;codingend_hist&quot;             
+##  [15] &quot;gapstart1&quot;                   &quot;gapstart2&quot;                  
+##  [17] &quot;gapstart3&quot;                   &quot;gapend1&quot;                    
+##  [19] &quot;gapend2&quot;                     &quot;gapend3&quot;                    
+##  [21] &quot;gap_index&quot;                   &quot;COWcode&quot;                    
+##  [23] &quot;e_v2x_api_3C&quot;                &quot;e_v2x_api_4C&quot;               
+##  [25] &quot;e_v2x_api_5C&quot;                &quot;e_v2x_civlib_3C&quot;            
+##  [27] &quot;e_v2x_civlib_4C&quot;             &quot;e_v2x_civlib_5C&quot;            
+##  [29] &quot;e_v2x_clphy_3C&quot;              &quot;e_v2x_clphy_4C&quot;             
+##  [31] &quot;e_v2x_clphy_5C&quot;              &quot;e_v2x_clpol_3C&quot;             
+##  [33] &quot;e_v2x_clpol_4C&quot;              &quot;e_v2x_clpol_5C&quot;             
+##  [35] &quot;e_v2x_clpriv_3C&quot;             &quot;e_v2x_clpriv_4C&quot;            
+##  [37] &quot;e_v2x_clpriv_5C&quot;             &quot;e_v2x_corr_3C&quot;              
+##  [39] &quot;e_v2x_corr_4C&quot;               &quot;e_v2x_corr_5C&quot;              
+##  [41] &quot;e_v2x_cspart_3C&quot;             &quot;e_v2x_cspart_4C&quot;            
+##  [43] &quot;e_v2x_cspart_5C&quot;             &quot;e_v2x_delibdem_3C&quot;          
+##  [45] &quot;e_v2x_delibdem_4C&quot;           &quot;e_v2x_delibdem_5C&quot;          
+##  [47] &quot;e_v2x_EDcomp_thick_3C&quot;       &quot;e_v2x_EDcomp_thick_4C&quot;      
+##  [49] &quot;e_v2x_EDcomp_thick_5C&quot;       &quot;e_v2x_egal_3C&quot;              
+##  [51] &quot;e_v2x_egal_4C&quot;               &quot;e_v2x_egal_5C&quot;              
+##  [53] &quot;e_v2x_egaldem_3C&quot;            &quot;e_v2x_egaldem_4C&quot;           
+##  [55] &quot;e_v2x_egaldem_5C&quot;            &quot;e_v2x_elecoff_3C&quot;           
+##  [57] &quot;e_v2x_elecoff_4C&quot;            &quot;e_v2x_elecoff_5C&quot;           
+##  [59] &quot;e_v2x_execorr_3C&quot;            &quot;e_v2x_execorr_4C&quot;           
+##  [61] &quot;e_v2x_execorr_5C&quot;            &quot;e_v2x_feduni_3C&quot;            
+##  [63] &quot;e_v2x_feduni_4C&quot;             &quot;e_v2x_feduni_5C&quot;            
+##  [65] &quot;e_v2x_frassoc_thick_3C&quot;      &quot;e_v2x_frassoc_thick_4C&quot;     
+##  [67] &quot;e_v2x_frassoc_thick_5C&quot;      &quot;e_v2x_freexp_3C&quot;            
+##  [69] &quot;e_v2x_freexp_4C&quot;             &quot;e_v2x_freexp_5C&quot;            
+##  [71] &quot;e_v2x_freexp_altinf_3C&quot;      &quot;e_v2x_freexp_altinf_4C&quot;     
+##  [73] &quot;e_v2x_freexp_altinf_5C&quot;      &quot;e_v2x_gencl_3C&quot;             
+##  [75] &quot;e_v2x_gencl_4C&quot;              &quot;e_v2x_gencl_5C&quot;             
+##  [77] &quot;e_v2x_gencs_3C&quot;              &quot;e_v2x_gencs_4C&quot;             
+##  [79] &quot;e_v2x_gencs_5C&quot;              &quot;e_v2x_gender_3C&quot;            
+##  [81] &quot;e_v2x_gender_4C&quot;             &quot;e_v2x_gender_5C&quot;            
+##  [83] &quot;e_v2x_genpp_3C&quot;              &quot;e_v2x_genpp_4C&quot;             
+##  [85] &quot;e_v2x_genpp_5C&quot;              &quot;e_v2x_jucon_3C&quot;             
+##  [87] &quot;e_v2x_jucon_4C&quot;              &quot;e_v2x_jucon_5C&quot;             
+##  [89] &quot;e_v2x_libdem_3C&quot;             &quot;e_v2x_libdem_4C&quot;            
+##  [91] &quot;e_v2x_libdem_5C&quot;             &quot;e_v2x_liberal_3C&quot;           
+##  [93] &quot;e_v2x_liberal_4C&quot;            &quot;e_v2x_liberal_5C&quot;           
+##  [95] &quot;e_v2x_mpi_3C&quot;                &quot;e_v2x_mpi_4C&quot;               
+##  [97] &quot;e_v2x_mpi_5C&quot;                &quot;e_v2x_partip_3C&quot;            
+##  [99] &quot;e_v2x_partip_4C&quot;             &quot;e_v2x_partip_5C&quot;            
+## [101] &quot;e_v2x_partipdem_3C&quot;          &quot;e_v2x_partipdem_4C&quot;         
+## [103] &quot;e_v2x_partipdem_5C&quot;          &quot;e_v2x_polyarchy_3C&quot;         
+## [105] &quot;e_v2x_polyarchy_4C&quot;          &quot;e_v2x_polyarchy_5C&quot;         
+## [107] &quot;e_v2x_pubcorr_3C&quot;            &quot;e_v2x_pubcorr_4C&quot;           
+## [109] &quot;e_v2x_pubcorr_5C&quot;            &quot;e_v2x_suffr_3C&quot;             
+## [111] &quot;e_v2x_suffr_4C&quot;              &quot;e_v2x_suffr_5C&quot;             
+## [113] &quot;e_v2xcl_rol_3C&quot;              &quot;e_v2xcl_rol_4C&quot;             
+## [115] &quot;e_v2xcl_rol_5C&quot;              &quot;e_v2xcs_ccsi_3C&quot;            
+## [117] &quot;e_v2xcs_ccsi_4C&quot;             &quot;e_v2xcs_ccsi_5C&quot;            
+## [119] &quot;e_v2xdd_dd_3C&quot;               &quot;e_v2xdd_dd_4C&quot;              
+## [121] &quot;e_v2xdd_dd_5C&quot;               &quot;e_v2xdl_delib_3C&quot;           
+## [123] &quot;e_v2xdl_delib_4C&quot;            &quot;e_v2xdl_delib_5C&quot;           
+## [125] &quot;e_v2xeg_eqdr_3C&quot;             &quot;e_v2xeg_eqdr_4C&quot;            
+## [127] &quot;e_v2xeg_eqdr_5C&quot;             &quot;e_v2xeg_eqprotec_3C&quot;        
+## [129] &quot;e_v2xeg_eqprotec_4C&quot;         &quot;e_v2xeg_eqprotec_5C&quot;        
+## [131] &quot;e_v2xel_frefair_3C&quot;          &quot;e_v2xel_frefair_4C&quot;         
+## [133] &quot;e_v2xel_frefair_5C&quot;          &quot;e_v2xel_locelec_3C&quot;         
+## [135] &quot;e_v2xel_locelec_4C&quot;          &quot;e_v2xel_locelec_5C&quot;         
+## [137] &quot;e_v2xel_regelec_3C&quot;          &quot;e_v2xel_regelec_4C&quot;         
+## [139] &quot;e_v2xel_regelec_5C&quot;          &quot;e_v2xlg_legcon_3C&quot;          
+## [141] &quot;e_v2xlg_legcon_4C&quot;           &quot;e_v2xlg_legcon_5C&quot;          
+## [143] &quot;e_v2xme_altinf_3C&quot;           &quot;e_v2xme_altinf_4C&quot;          
+## [145] &quot;e_v2xme_altinf_5C&quot;           &quot;e_v2xps_party_3C&quot;           
+## [147] &quot;e_v2xps_party_4C&quot;            &quot;e_v2xps_party_5C&quot;           
+## [149] &quot;e_boix_regime&quot;               &quot;e_democracy_breakdowns&quot;     
+## [151] &quot;e_democracy_omitteddata&quot;     &quot;e_democracy_trans&quot;          
+## [153] &quot;e_fh_cl&quot;                     &quot;e_fh_pr&quot;                    
+## [155] &quot;e_fh_rol&quot;                    &quot;e_fh_status&quot;                
+## [157] &quot;e_wbgi_cce&quot;                  &quot;e_wbgi_gee&quot;                 
+## [159] &quot;e_wbgi_pve&quot;                  &quot;e_wbgi_rle&quot;                 
+## [161] &quot;e_wbgi_rqe&quot;                  &quot;e_wbgi_vae&quot;                 
+## [163] &quot;e_lexical_index&quot;             &quot;e_uds_median&quot;               
+## [165] &quot;e_uds_mean&quot;                  &quot;e_uds_pct025&quot;               
+## [167] &quot;e_uds_pct975&quot;                &quot;e_coups&quot;                    
+## [169] &quot;e_legparty&quot;                  &quot;e_autoc&quot;                    
+## [171] &quot;e_democ&quot;                     &quot;e_p_polity&quot;                 
+## [173] &quot;e_polcomp&quot;                   &quot;e_polity2&quot;                  
+## [175] &quot;e_bnr_dem&quot;                   &quot;e_chga_demo&quot;                
+## [177] &quot;e_ti_cpi&quot;                    &quot;e_vanhanen&quot;                 
+## [179] &quot;e_peaveduc&quot;                  &quot;e_peedgini&quot;                 
+## [181] &quot;e_area&quot;                      &quot;e_regiongeo&quot;                
+## [183] &quot;e_regionpol&quot;                 &quot;e_regionpol_6C&quot;             
+## [185] &quot;e_cow_exports&quot;               &quot;e_cow_imports&quot;              
+## [187] &quot;e_gdp&quot;                       &quot;e_gdp_sd&quot;                   
+## [189] &quot;e_gdppc&quot;                     &quot;e_gdppc_sd&quot;                 
+## [191] &quot;e_miinflat&quot;                  &quot;e_pop&quot;                      
+## [193] &quot;e_pop_sd&quot;                    &quot;e_total_fuel_income_pc&quot;     
+## [195] &quot;e_total_oil_income_pc&quot;       &quot;e_total_resources_income_pc&quot;
+## [197] &quot;e_radio_n&quot;                   &quot;e_miferrat&quot;                 
+## [199] &quot;e_mipopula&quot;                  &quot;e_miurbani&quot;                 
+## [201] &quot;e_miurbpop&quot;                  &quot;e_pefeliex&quot;                 
+## [203] &quot;e_peinfmor&quot;                  &quot;e_pelifeex&quot;                 
+## [205] &quot;e_pematmor&quot;                  &quot;e_wb_pop&quot;                   
+## [207] &quot;e_civil_war&quot;                 &quot;e_miinteco&quot;                 
+## [209] &quot;e_miinterc&quot;                  &quot;e_pt_coup&quot;                  
+## [211] &quot;e_pt_coup_attempts&quot;</code></pre>
+<pre class="r"><code>d |&gt; select(country_name, country_id, year) |&gt;
+  distinct()</code></pre>
+<pre><code>## # A tibble: 6,789 × 3
+##    country_name country_id  year
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;
+##  1 Mexico                3  1984
+##  2 Mexico                3  1985
+##  3 Mexico                3  1986
+##  4 Mexico                3  1987
+##  5 Mexico                3  1988
+##  6 Mexico                3  1989
+##  7 Mexico                3  1990
+##  8 Mexico                3  1991
+##  9 Mexico                3  1992
+## 10 Mexico                3  1993
+## # ℹ 6,779 more rows</code></pre>
+<pre class="r"><code># which countries are in this dateset
+d |&gt; select(country_name) |&gt; distinct()</code></pre>
+<pre><code>## # A tibble: 181 × 1
+##    country_name 
+##    &lt;chr&gt;        
+##  1 Mexico       
+##  2 Suriname     
+##  3 Sweden       
+##  4 Switzerland  
+##  5 Ghana        
+##  6 South Africa 
+##  7 Japan        
+##  8 Burma/Myanmar
+##  9 Russia       
+## 10 Albania      
+## # ℹ 171 more rows</code></pre>
+<pre class="r"><code>d |&gt; select(year)</code></pre>
+<pre><code>## # A tibble: 6,789 × 1
+##     year
+##    &lt;dbl&gt;
+##  1  1984
+##  2  1985
+##  3  1986
+##  4  1987
+##  5  1988
+##  6  1989
+##  7  1990
+##  8  1991
+##  9  1992
+## 10  1993
+## # ℹ 6,779 more rows</code></pre>
+<p>select both the country identifiers, GDP, and GDP per capita.</p>
+<pre class="r"><code>d |&gt; select(country_name, country_id, year, e_gdp, e_gdppc)</code></pre>
+<pre><code>## # A tibble: 6,789 × 5
+##    country_name country_id  year   e_gdp e_gdppc
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Mexico                3  1984  93563.    11.7
+##  2 Mexico                3  1985  94259.    11.5
+##  3 Mexico                3  1986  92750.    11.1
+##  4 Mexico                3  1987  93220.    10.9
+##  5 Mexico                3  1988  94687.    10.8
+##  6 Mexico                3  1989  98145.    11.0
+##  7 Mexico                3  1990 103254.    11.4
+##  8 Mexico                3  1991 107374.    11.6
+##  9 Mexico                3  1992 111533.    11.9
+## 10 Mexico                3  1993 114611.    12.0
+## # ℹ 6,779 more rows</code></pre>
+<pre class="r"><code>d_gdp &lt;- d |&gt;
+select(country_name, country_id, year, e_gdp, e_gdppc)
+d_gdp</code></pre>
+<pre><code>## # A tibble: 6,789 × 5
+##    country_name country_id  year   e_gdp e_gdppc
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Mexico                3  1984  93563.    11.7
+##  2 Mexico                3  1985  94259.    11.5
+##  3 Mexico                3  1986  92750.    11.1
+##  4 Mexico                3  1987  93220.    10.9
+##  5 Mexico                3  1988  94687.    10.8
+##  6 Mexico                3  1989  98145.    11.0
+##  7 Mexico                3  1990 103254.    11.4
+##  8 Mexico                3  1991 107374.    11.6
+##  9 Mexico                3  1992 111533.    11.9
+## 10 Mexico                3  1993 114611.    12.0
+## # ℹ 6,779 more rows</code></pre>
+</div>
+<div id="rename-column-to-make-names-informative" class="section level3">
+<h3>3. Rename Column to make names informative</h3>
+<pre class="r"><code>d_gdp |&gt;
+  rename(&quot;GDP&quot;=&quot;e_gdp&quot;, &quot;GDP_per_capita&quot; =&quot;e_gdppc&quot;, &quot;country&quot; = &quot;country_name&quot;, &quot;ID&quot;=&quot;country_id&quot;, &quot;Year&quot; = &quot;year&quot;)</code></pre>
+<pre><code>## # A tibble: 6,789 × 5
+##    country    ID  Year     GDP GDP_per_capita
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Mexico      3  1984  93563.           11.7
+##  2 Mexico      3  1985  94259.           11.5
+##  3 Mexico      3  1986  92750.           11.1
+##  4 Mexico      3  1987  93220.           10.9
+##  5 Mexico      3  1988  94687.           10.8
+##  6 Mexico      3  1989  98145.           11.0
+##  7 Mexico      3  1990 103254.           11.4
+##  8 Mexico      3  1991 107374.           11.6
+##  9 Mexico      3  1992 111533.           11.9
+## 10 Mexico      3  1993 114611.           12.0
+## # ℹ 6,779 more rows</code></pre>
+<pre class="r"><code>print(d_gdp)</code></pre>
+<pre><code>## # A tibble: 6,789 × 5
+##    country_name country_id  year   e_gdp e_gdppc
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Mexico                3  1984  93563.    11.7
+##  2 Mexico                3  1985  94259.    11.5
+##  3 Mexico                3  1986  92750.    11.1
+##  4 Mexico                3  1987  93220.    10.9
+##  5 Mexico                3  1988  94687.    10.8
+##  6 Mexico                3  1989  98145.    11.0
+##  7 Mexico                3  1990 103254.    11.4
+##  8 Mexico                3  1991 107374.    11.6
+##  9 Mexico                3  1992 111533.    11.9
+## 10 Mexico                3  1993 114611.    12.0
+## # ℹ 6,779 more rows</code></pre>
+<pre class="r"><code>library(dplyr)
+d_gdp &lt;- d_gdp %&gt;%
+  rename( &quot;GDP&quot;=&quot;e_gdp&quot;, &quot;GDP_per_capita&quot; =&quot;e_gdppc&quot;, &quot;country&quot; = &quot;country_name&quot;, &quot;ID&quot;=&quot;country_id&quot;, &quot;Year&quot; = &quot;year&quot;)
+print(d_gdp)</code></pre>
+<pre><code>## # A tibble: 6,789 × 5
+##    country    ID  Year     GDP GDP_per_capita
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Mexico      3  1984  93563.           11.7
+##  2 Mexico      3  1985  94259.           11.5
+##  3 Mexico      3  1986  92750.           11.1
+##  4 Mexico      3  1987  93220.           10.9
+##  5 Mexico      3  1988  94687.           10.8
+##  6 Mexico      3  1989  98145.           11.0
+##  7 Mexico      3  1990 103254.           11.4
+##  8 Mexico      3  1991 107374.           11.6
+##  9 Mexico      3  1992 111533.           11.9
+## 10 Mexico      3  1993 114611.           12.0
+## # ℹ 6,779 more rows</code></pre>
+</div>
+<div id="slice-rows" class="section level3">
+<h3>4. slice rows</h3>
+<pre class="r"><code># want countries-years with 
+d_gdp |&gt;
+  slice_max(order_by= GDP , n=10)</code></pre>
+<pre><code>## # A tibble: 10 × 5
+##    country                     ID  Year      GDP GDP_per_capita
+##    &lt;chr&gt;                    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;
+##  1 China                      110  2019 2279809.           15.4
+##  2 China                      110  2018 2205730.           14.9
+##  3 China                      110  2017 2136176.           14.5
+##  4 United States of America    20  2019 2118706.           60.6
+##  5 United States of America    20  2018 2077898.           59.6
+##  6 China                      110  2016 2039529.           13.9
+##  7 United States of America    20  2017 2023242.           58.5
+##  8 United States of America    20  2016 1980809.           57.6
+##  9 China                      110  2015 1953127.           13.3
+## 10 United States of America    20  2015 1942092.           56.7</code></pre>
+<pre class="r"><code>d_gdp |&gt;
+  slice_sample(n = 10) # sample 10 observations</code></pre>
+<pre><code>## # A tibble: 10 × 5
+##    country         ID  Year    GDP GDP_per_capita
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Singapore      200  1999 14999.          35.6 
+##  2 Syria           97  1984  3981.           3.96
+##  3 Croatia        154  2018  9968.          23.0 
+##  4 Senegal         31  2000  2496.           2.33
+##  5 South Korea     42  1986 39768.           9.09
+##  6 South Africa     8  1998 40175.           8.54
+##  7 Ecuador         75  1995  8003.           6.63
+##  8 Romania        190  1984 16282.           6.71
+##  9 Eswatini       132  1996   671.           6.41
+## 10 Senegal         31  2003  2758.           2.39</code></pre>
+<pre class="r"><code>d_gdp |&gt;
+  slice_sample(prop = 0.1) </code></pre>
+<pre><code>## # A tibble: 678 × 5
+##    country                ID  Year    GDP GDP_per_capita
+##    &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Palestine/West Bank   128  1986    NA           NA   
+##  2 Laos                  123  1996   936.           1.80
+##  3 Peru                   30  2018 37050.          11.0 
+##  4 Syria                  97  2017  7362.           3.98
+##  5 Bahrain               146  2011  4169.          30.3 
+##  6 Georgia               118  2018  5345.          12.1 
+##  7 Trinidad and Tobago   135  2003  2885.          21.6 
+##  8 Taiwan                 48  1998 71421.          30.4 
+##  9 Venezuela              51  2022    NA           NA   
+## 10 Singapore             200  2002 17834.          40.0 
+## # ℹ 668 more rows</code></pre>
+</div>
+<div id="subset-data-by-row" class="section level3">
+<h3>5. Subset data by row</h3>
+<pre class="r"><code># want :2000-2005 data 
+d_gdp |&gt;
+   filter(Year &gt;= 2000 &amp; Year &gt;= 2005)</code></pre>
+<pre><code>## # A tibble: 3,214 × 5
+##    country    ID  Year     GDP GDP_per_capita
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Mexico      3  2005 162094.           14.3
+##  2 Mexico      3  2006 167392.           14.6
+##  3 Mexico      3  2007 171691.           14.7
+##  4 Mexico      3  2008 174204.           14.8
+##  5 Mexico      3  2009 171739.           14.4
+##  6 Mexico      3  2010 178865.           14.8
+##  7 Mexico      3  2011 185824.           15.1
+##  8 Mexico      3  2012 192272.           15.4
+##  9 Mexico      3  2013 196480.           15.6
+## 10 Mexico      3  2014 201281.           15.7
+## # ℹ 3,204 more rows</code></pre>
+<pre class="r"><code>d_gdp |&gt; 
+  filter(country == &quot;China&quot;)</code></pre>
+<pre><code>## # A tibble: 39 × 5
+##    country    ID  Year     GDP GDP_per_capita
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;          &lt;dbl&gt;
+##  1 China     110  1984 243976.           2.21
+##  2 China     110  1985 265805.           2.36
+##  3 China     110  1986 285707.           2.50
+##  4 China     110  1987 308227.           2.65
+##  5 China     110  1988 322596.           2.73
+##  6 China     110  1989 327739.           2.74
+##  7 China     110  1990 315683.           2.63
+##  8 China     110  1991 329836.           2.71
+##  9 China     110  1992 359817.           2.90
+## 10 China     110  1993 393449.           3.15
+## # ℹ 29 more rows</code></pre>
+<pre class="r"><code>d_gdp |&gt; filter(Year &gt;= 2000 &amp; Year &lt;= 2005|country == &quot;China&quot;)</code></pre>
+<pre><code>## # A tibble: 1,095 × 5
+##    country     ID  Year     GDP GDP_per_capita
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Mexico       3  2000 145206.          13.7 
+##  2 Mexico       3  2001 146993.          13.6 
+##  3 Mexico       3  2002 148549.          13.6 
+##  4 Mexico       3  2003 151035.          13.7 
+##  5 Mexico       3  2004 156578.          14.1 
+##  6 Mexico       3  2005 162094.          14.3 
+##  7 Suriname     4  2000    383.           7.67
+##  8 Suriname     4  2001    402.           7.93
+##  9 Suriname     4  2002    423.           8.25
+## 10 Suriname     4  2003    451.           8.67
+## # ℹ 1,085 more rows</code></pre>
+</div>
+<div id="arrange" class="section level3">
+<h3>6. Arrange</h3>
+<pre class="r"><code>#want: sort the row by GDP per capita
+d_gdp |&gt; arrange(GDP_per_capita)</code></pre>
+<pre><code>## # A tibble: 6,789 × 5
+##    country                             ID  Year    GDP GDP_per_capita
+##    &lt;chr&gt;                            &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Liberia                             86  1995   62.3          0.286
+##  2 Liberia                             86  1994   65.5          0.307
+##  3 Liberia                             86  1996   70.6          0.309
+##  4 Liberia                             86  1993   81.5          0.383
+##  5 Liberia                             86  1997  107.           0.429
+##  6 Liberia                             86  1992  113.           0.53 
+##  7 Democratic Republic of the Congo   111  2002 2966.           0.538
+##  8 Democratic Republic of the Congo   111  2001 2890.           0.54 
+##  9 Liberia                             86  1998  147.           0.543
+## 10 Democratic Republic of the Congo   111  2003 3141.           0.552
+## # ℹ 6,779 more rows</code></pre>
 </div>
 </div>
 
