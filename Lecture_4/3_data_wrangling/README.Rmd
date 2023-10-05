@@ -124,11 +124,14 @@ This section loads the VDEM dataset and describe its basic information
 
 ```{r}
 d <- read_csv("_DataPublic_/vdem/1984_2022/vdem_1984_2022_external.csv")
+spec(d)
 ```
 
-getwd()
+getwd()\
+\
+\
 
-### 2. Select economic development indicators
+### 2. Select economic development indicatorsd
 
 First, we look at the identifiers of the data.
 
@@ -171,10 +174,9 @@ print(d_gdp)
 ```
 
 ```{r}
-library(dplyr)
-d_gdp <- d_gdp %>%
+d_gdp <- d_gdp |>
   rename( "GDP"="e_gdp", "GDP_per_capita" ="e_gdppc", "country" = "country_name", "ID"="country_id", "Year" = "year")
-print(d_gdp)
+d_gdp
 ```
 
 ### 4. slice rows
@@ -219,3 +221,129 @@ d_gdp |> filter(Year >= 2000 & Year <= 2005|country == "China")
 d_gdp |> arrange(GDP_per_capita)
 ```
 
+### 7.Perform 4,5,6 group by group: group_by, ungroup
+
+```{r}
+#want: for each country, we want the year with the highest GDP
+
+d_gdp |>
+  group_by(country) |>
+  slice_max(GDP, n=1)
+```
+
+```{r}
+# How may entries are there for each country
+d_gdp |>
+  group_by(country) |>
+  count()
+?count()
+```
+
+```{r}
+#want: year when countries has worst GDP
+d_gdp |>
+  group_by(country) |>
+  slice_min(order_by=GDP, n=1)
+```
+
+### 8. mutate: create new column
+
+#doesn't change the number of rows
+
+```{r}
+# create a new column, takes the value of 1
+d_gdp |> mutate(New=1)
+```
+
+```{r}
+d_gdp |> mutate(New=GDP)
+d_gdp |> mutate(New=log(GDP)+1)
+```
+
+```{r}
+#more complex situation:
+#want: New column to be GDP relative to the average GDP in the world 1984-2022
+
+d_gdp |> mutate(GDP_over_avg=GDP/mean(GDP,na.rm=TRUE))
+#na.rm=true---to ignore NA
+```
+
+```{r}
+#want: New column to be GDP relative to the average GDP of the country 1984-2022
+
+d_gdp |> 
+  group_by(country) |>
+mutate(GDP_over_avg=GDP/ mean(GDP, na.rm=TRUE))
+```
+
+```{r}
+#country-year development level with reference to that of 1984.
+?first
+```
+
+```{r}
+d_gdp |>
+  group_by(country) |>
+  arrange(Year) |>
+  mutate(GDP_over_1984 = GDP/ first(GDP)) |>
+  ungroup()|>
+  arrange(country,Year)
+```
+
+```{r}
+#year-on-year economic growth.
+#?lag
+
+d_gdp|>
+  group_by(country)|>
+  arrange(Year)|>
+  mutate(GDP_yoy_change= GDP - lag(GDP,n=1))|>
+  ungroup()|>
+  arrange(country,Year)
+```
+
+### 9.summary
+
+#change number of rows
+
+```{r}
+#data integrity check (find missing data)
+d_gdp|>
+  #create a column that indicates whether the value is missing
+  mutate(GDP_missing= as.numeric(is.na(GDP)), .after=GDP)|>
+           group_by(country)|>
+           summarize(N_GDP_missing=sum(GDP_missing))
+#.after=GDP--put it after the GDP column
+```
+
+```{r}
+#want: average GDP level of the world
+d_gdp|>
+  summarise(gdp_average =mean(GDP, na.rm=TRUE),
+            GDP_per_capita_average=mean(GDP_per_capita,na.rm=TRUE))
+```
+
+```{r}
+# average development level
+d_gdp |>
+  group_by(country)|>
+  summarize(GDP_average=mean(GDP,na.rm=TRUE),
+            GDPpc_average=mean(GDP_per_capita, na.rm=TRUE))
+```
+
+```{r}
+#GDP growth and GDP per capita:comparing 2020 with 1984
+d_gdp |>
+  filter(Year>=1984,Year<=2019)|>
+  group_by(country) |>
+  summarise(GDP_growth_2019_1984=(last(GDP)-first(GDP))/first(GDP),
+            GDP_per_capita_2019_1984=(last(GDP_per_capita)-first(GDP_per_capita))/first(GDP_per_capita))|>
+  ungroup()|>
+  arrange(country)
+```
+
+### 10. Final note
+
+\# pipe "\|\>" : to reduce the intermediate output
+
+\# "\|\>"(new version) and "%\>%"(can handle more complicated task)

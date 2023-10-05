@@ -109,7 +109,7 @@
 
 \title{Data Wrangling (1)}
 \author{Haohan Chen}
-\date{Last update: 九月 28, 2023}
+\date{Last update: 十月 05, 2023}
 
 \begin{document}
 \maketitle
@@ -373,11 +373,235 @@ This section loads the VDEM dataset and describe its basic information
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
 \end{verbatim}
 
-getwd()
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{spec}\NormalTok{(d)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{select-economic-development-indicators}{%
+\begin{verbatim}
+## cols(
+##   country_name = col_character(),
+##   country_text_id = col_character(),
+##   country_id = col_double(),
+##   year = col_double(),
+##   historical_date = col_date(format = ""),
+##   project = col_double(),
+##   historical = col_double(),
+##   histname = col_character(),
+##   codingstart = col_double(),
+##   codingend = col_double(),
+##   codingstart_contemp = col_double(),
+##   codingend_contemp = col_double(),
+##   codingstart_hist = col_double(),
+##   codingend_hist = col_double(),
+##   gapstart1 = col_double(),
+##   gapstart2 = col_double(),
+##   gapstart3 = col_double(),
+##   gapend1 = col_double(),
+##   gapend2 = col_double(),
+##   gapend3 = col_double(),
+##   gap_index = col_double(),
+##   COWcode = col_double(),
+##   e_v2x_api_3C = col_double(),
+##   e_v2x_api_4C = col_double(),
+##   e_v2x_api_5C = col_double(),
+##   e_v2x_civlib_3C = col_double(),
+##   e_v2x_civlib_4C = col_double(),
+##   e_v2x_civlib_5C = col_double(),
+##   e_v2x_clphy_3C = col_double(),
+##   e_v2x_clphy_4C = col_double(),
+##   e_v2x_clphy_5C = col_double(),
+##   e_v2x_clpol_3C = col_double(),
+##   e_v2x_clpol_4C = col_double(),
+##   e_v2x_clpol_5C = col_double(),
+##   e_v2x_clpriv_3C = col_double(),
+##   e_v2x_clpriv_4C = col_double(),
+##   e_v2x_clpriv_5C = col_double(),
+##   e_v2x_corr_3C = col_double(),
+##   e_v2x_corr_4C = col_double(),
+##   e_v2x_corr_5C = col_double(),
+##   e_v2x_cspart_3C = col_double(),
+##   e_v2x_cspart_4C = col_double(),
+##   e_v2x_cspart_5C = col_double(),
+##   e_v2x_delibdem_3C = col_double(),
+##   e_v2x_delibdem_4C = col_double(),
+##   e_v2x_delibdem_5C = col_double(),
+##   e_v2x_EDcomp_thick_3C = col_double(),
+##   e_v2x_EDcomp_thick_4C = col_double(),
+##   e_v2x_EDcomp_thick_5C = col_double(),
+##   e_v2x_egal_3C = col_double(),
+##   e_v2x_egal_4C = col_double(),
+##   e_v2x_egal_5C = col_double(),
+##   e_v2x_egaldem_3C = col_double(),
+##   e_v2x_egaldem_4C = col_double(),
+##   e_v2x_egaldem_5C = col_double(),
+##   e_v2x_elecoff_3C = col_double(),
+##   e_v2x_elecoff_4C = col_double(),
+##   e_v2x_elecoff_5C = col_double(),
+##   e_v2x_execorr_3C = col_double(),
+##   e_v2x_execorr_4C = col_double(),
+##   e_v2x_execorr_5C = col_double(),
+##   e_v2x_feduni_3C = col_double(),
+##   e_v2x_feduni_4C = col_double(),
+##   e_v2x_feduni_5C = col_double(),
+##   e_v2x_frassoc_thick_3C = col_double(),
+##   e_v2x_frassoc_thick_4C = col_double(),
+##   e_v2x_frassoc_thick_5C = col_double(),
+##   e_v2x_freexp_3C = col_double(),
+##   e_v2x_freexp_4C = col_double(),
+##   e_v2x_freexp_5C = col_double(),
+##   e_v2x_freexp_altinf_3C = col_double(),
+##   e_v2x_freexp_altinf_4C = col_double(),
+##   e_v2x_freexp_altinf_5C = col_double(),
+##   e_v2x_gencl_3C = col_double(),
+##   e_v2x_gencl_4C = col_double(),
+##   e_v2x_gencl_5C = col_double(),
+##   e_v2x_gencs_3C = col_double(),
+##   e_v2x_gencs_4C = col_double(),
+##   e_v2x_gencs_5C = col_double(),
+##   e_v2x_gender_3C = col_double(),
+##   e_v2x_gender_4C = col_double(),
+##   e_v2x_gender_5C = col_double(),
+##   e_v2x_genpp_3C = col_double(),
+##   e_v2x_genpp_4C = col_double(),
+##   e_v2x_genpp_5C = col_double(),
+##   e_v2x_jucon_3C = col_double(),
+##   e_v2x_jucon_4C = col_double(),
+##   e_v2x_jucon_5C = col_double(),
+##   e_v2x_libdem_3C = col_double(),
+##   e_v2x_libdem_4C = col_double(),
+##   e_v2x_libdem_5C = col_double(),
+##   e_v2x_liberal_3C = col_double(),
+##   e_v2x_liberal_4C = col_double(),
+##   e_v2x_liberal_5C = col_double(),
+##   e_v2x_mpi_3C = col_double(),
+##   e_v2x_mpi_4C = col_double(),
+##   e_v2x_mpi_5C = col_double(),
+##   e_v2x_partip_3C = col_double(),
+##   e_v2x_partip_4C = col_double(),
+##   e_v2x_partip_5C = col_double(),
+##   e_v2x_partipdem_3C = col_double(),
+##   e_v2x_partipdem_4C = col_double(),
+##   e_v2x_partipdem_5C = col_double(),
+##   e_v2x_polyarchy_3C = col_double(),
+##   e_v2x_polyarchy_4C = col_double(),
+##   e_v2x_polyarchy_5C = col_double(),
+##   e_v2x_pubcorr_3C = col_double(),
+##   e_v2x_pubcorr_4C = col_double(),
+##   e_v2x_pubcorr_5C = col_double(),
+##   e_v2x_suffr_3C = col_double(),
+##   e_v2x_suffr_4C = col_double(),
+##   e_v2x_suffr_5C = col_double(),
+##   e_v2xcl_rol_3C = col_double(),
+##   e_v2xcl_rol_4C = col_double(),
+##   e_v2xcl_rol_5C = col_double(),
+##   e_v2xcs_ccsi_3C = col_double(),
+##   e_v2xcs_ccsi_4C = col_double(),
+##   e_v2xcs_ccsi_5C = col_double(),
+##   e_v2xdd_dd_3C = col_double(),
+##   e_v2xdd_dd_4C = col_double(),
+##   e_v2xdd_dd_5C = col_double(),
+##   e_v2xdl_delib_3C = col_double(),
+##   e_v2xdl_delib_4C = col_double(),
+##   e_v2xdl_delib_5C = col_double(),
+##   e_v2xeg_eqdr_3C = col_double(),
+##   e_v2xeg_eqdr_4C = col_double(),
+##   e_v2xeg_eqdr_5C = col_double(),
+##   e_v2xeg_eqprotec_3C = col_double(),
+##   e_v2xeg_eqprotec_4C = col_double(),
+##   e_v2xeg_eqprotec_5C = col_double(),
+##   e_v2xel_frefair_3C = col_double(),
+##   e_v2xel_frefair_4C = col_double(),
+##   e_v2xel_frefair_5C = col_double(),
+##   e_v2xel_locelec_3C = col_double(),
+##   e_v2xel_locelec_4C = col_double(),
+##   e_v2xel_locelec_5C = col_double(),
+##   e_v2xel_regelec_3C = col_double(),
+##   e_v2xel_regelec_4C = col_double(),
+##   e_v2xel_regelec_5C = col_double(),
+##   e_v2xlg_legcon_3C = col_double(),
+##   e_v2xlg_legcon_4C = col_double(),
+##   e_v2xlg_legcon_5C = col_double(),
+##   e_v2xme_altinf_3C = col_double(),
+##   e_v2xme_altinf_4C = col_double(),
+##   e_v2xme_altinf_5C = col_double(),
+##   e_v2xps_party_3C = col_double(),
+##   e_v2xps_party_4C = col_double(),
+##   e_v2xps_party_5C = col_double(),
+##   e_boix_regime = col_double(),
+##   e_democracy_breakdowns = col_double(),
+##   e_democracy_omitteddata = col_double(),
+##   e_democracy_trans = col_double(),
+##   e_fh_cl = col_double(),
+##   e_fh_pr = col_double(),
+##   e_fh_rol = col_double(),
+##   e_fh_status = col_double(),
+##   e_wbgi_cce = col_double(),
+##   e_wbgi_gee = col_double(),
+##   e_wbgi_pve = col_double(),
+##   e_wbgi_rle = col_double(),
+##   e_wbgi_rqe = col_double(),
+##   e_wbgi_vae = col_double(),
+##   e_lexical_index = col_double(),
+##   e_uds_median = col_double(),
+##   e_uds_mean = col_double(),
+##   e_uds_pct025 = col_double(),
+##   e_uds_pct975 = col_double(),
+##   e_coups = col_double(),
+##   e_legparty = col_double(),
+##   e_autoc = col_double(),
+##   e_democ = col_double(),
+##   e_p_polity = col_double(),
+##   e_polcomp = col_double(),
+##   e_polity2 = col_double(),
+##   e_bnr_dem = col_double(),
+##   e_chga_demo = col_double(),
+##   e_ti_cpi = col_double(),
+##   e_vanhanen = col_double(),
+##   e_peaveduc = col_double(),
+##   e_peedgini = col_double(),
+##   e_area = col_double(),
+##   e_regiongeo = col_double(),
+##   e_regionpol = col_double(),
+##   e_regionpol_6C = col_double(),
+##   e_cow_exports = col_double(),
+##   e_cow_imports = col_double(),
+##   e_gdp = col_double(),
+##   e_gdp_sd = col_double(),
+##   e_gdppc = col_double(),
+##   e_gdppc_sd = col_double(),
+##   e_miinflat = col_double(),
+##   e_pop = col_double(),
+##   e_pop_sd = col_double(),
+##   e_total_fuel_income_pc = col_double(),
+##   e_total_oil_income_pc = col_double(),
+##   e_total_resources_income_pc = col_double(),
+##   e_radio_n = col_double(),
+##   e_miferrat = col_double(),
+##   e_mipopula = col_double(),
+##   e_miurbani = col_double(),
+##   e_miurbpop = col_double(),
+##   e_pefeliex = col_double(),
+##   e_peinfmor = col_double(),
+##   e_pelifeex = col_double(),
+##   e_pematmor = col_double(),
+##   e_wb_pop = col_double(),
+##   e_civil_war = col_double(),
+##   e_miinteco = col_double(),
+##   e_miinterc = col_double(),
+##   e_pt_coup = col_double(),
+##   e_pt_coup_attempts = col_double()
+## )
+\end{verbatim}
+
+getwd()\\
+\strut \\
+\strut \\
+
+\hypertarget{select-economic-development-indicatorsd}{%
 \subsubsection{2. Select economic development
-indicators}\label{select-economic-development-indicators}}
+indicatorsd}\label{select-economic-development-indicatorsd}}
 
 First, we look at the identifiers of the data.
 
@@ -670,10 +894,9 @@ informative}\label{rename-column-to-make-names-informative}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(dplyr)}
-\NormalTok{d\_gdp }\OtherTok{\textless{}{-}}\NormalTok{ d\_gdp }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{d\_gdp }\OtherTok{\textless{}{-}}\NormalTok{ d\_gdp }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{rename}\NormalTok{( }\StringTok{"GDP"}\OtherTok{=}\StringTok{"e\_gdp"}\NormalTok{, }\StringTok{"GDP\_per\_capita"} \OtherTok{=}\StringTok{"e\_gdppc"}\NormalTok{, }\StringTok{"country"} \OtherTok{=} \StringTok{"country\_name"}\NormalTok{, }\StringTok{"ID"}\OtherTok{=}\StringTok{"country\_id"}\NormalTok{, }\StringTok{"Year"} \OtherTok{=} \StringTok{"year"}\NormalTok{)}
-\FunctionTok{print}\NormalTok{(d\_gdp)}
+\NormalTok{d\_gdp}
 \end{Highlighting}
 \end{Shaded}
 
@@ -730,18 +953,18 @@ informative}\label{rename-column-to-make-names-informative}}
 
 \begin{verbatim}
 ## # A tibble: 10 x 5
-##    country          ID  Year    GDP GDP_per_capita
-##    <chr>         <dbl> <dbl>  <dbl>          <dbl>
-##  1 Singapore       200  2003 18876.         41.6  
-##  2 Burma/Myanmar    10  1993  4363.          0.998
-##  3 Zanzibar        236  2015    NA          NA    
-##  4 Honduras         27  1997  2170.          3.43 
-##  5 Cameroon        108  2000  3795.          2.27 
-##  6 Portugal         21  1994 20367.         19.3  
-##  7 Belarus         107  2005 13206.         12.8  
-##  8 Guatemala        78  1989  3951.          4.24 
-##  9 Cyprus          156  1990  1375.         19.2  
-## 10 Togo            134  2020    NA          NA
+##    country                ID  Year     GDP GDP_per_capita
+##    <chr>               <dbl> <dbl>   <dbl>          <dbl>
+##  1 Senegal                31  1997   2185.          2.19 
+##  2 Trinidad and Tobago   135  1987   1669.         13.1  
+##  3 Brazil                 19  2015 271643.         12.5  
+##  4 Switzerland             6  2016  49098.         54.2  
+##  5 Italy                  82  2007 219589.         35.0  
+##  6 Malawi                 87  2011   2013.          1.24 
+##  7 Burundi                69  2008    640.          0.746
+##  8 Sri Lanka             131  1991   7108.          3.84 
+##  9 Haiti                  26  2001   1522.          1.67 
+## 10 Saudi Arabia          197  2014 120714.         36.4
 \end{verbatim}
 
 \begin{Shaded}
@@ -753,18 +976,18 @@ informative}\label{rename-column-to-make-names-informative}}
 
 \begin{verbatim}
 ## # A tibble: 678 x 5
-##    country          ID  Year     GDP GDP_per_capita
-##    <chr>         <dbl> <dbl>   <dbl>          <dbl>
-##  1 Kuwait          171  2006  17005.          65.9 
-##  2 Argentina        37  2012  76871.          17.4 
-##  3 Rwanda          129  2009   1610.           1.56
-##  4 India            39  2005 400127.           3.37
-##  5 Poland           17  2004  61470.          15.1 
-##  6 Poland           17  2001  55474.          13.5 
-##  7 Gabon           116  1999   1304.          10.5 
-##  8 Syria            97  2022     NA           NA   
-##  9 Guinea-Bissau   119  2016    290.           1.53
-## 10 Malta           178  2016   1689.          34.9 
+##    country       ID  Year      GDP GDP_per_capita
+##    <chr>      <dbl> <dbl>    <dbl>          <dbl>
+##  1 Russia        11  2001 198348.           12.9 
+##  2 Algeria      103  2020     NA            NA   
+##  3 Venezuela     51  1990  20266.            9.91
+##  4 Mexico         3  1998 134086.           12.9 
+##  5 Laos         123  1985    496.            1.28
+##  6 Seychelles   199  1986     82.1          11.2 
+##  7 India         39  2006 434711.            3.61
+##  8 Seychelles   199  2000    168.           19.1 
+##  9 Ghana          7  2016  14720.            4.94
+## 10 Romania      190  2011  30498.           14.3 
 ## # i 668 more rows
 \end{verbatim}
 
@@ -869,5 +1092,419 @@ informative}\label{rename-column-to-make-names-informative}}
 ## 10 Democratic Republic of the Congo   111  2003 3141.           0.552
 ## # i 6,779 more rows
 \end{verbatim}
+
+\hypertarget{perform-456-group-by-group-group_by-ungroup}{%
+\subsubsection{7.Perform 4,5,6 group by group: group\_by,
+ungroup}\label{perform-456-group-by-group-group_by-ungroup}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#want: for each country, we want the year with the highest GDP}
+
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{slice\_max}\NormalTok{(GDP, }\AttributeTok{n=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 341 x 5
+## # Groups:   country [181]
+##    country        ID  Year     GDP GDP_per_capita
+##    <chr>       <dbl> <dbl>   <dbl>          <dbl>
+##  1 Afghanistan    36  2019   6775.           1.74
+##  2 Albania        12  2019   3490.          11.3 
+##  3 Algeria       103  2019  52143.          11.6 
+##  4 Angola        104  2015  17449.           6.56
+##  5 Argentina      37  2017  80302.          17.2 
+##  6 Armenia       105  2019   3903.          12.3 
+##  7 Australia      67  2019 127644.          48.1 
+##  8 Austria       144  2019  44063.          46.2 
+##  9 Azerbaijan    106  2014  15216.          15.1 
+## 10 Bahrain       146  2018   5149.          30.9 
+## # i 331 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How may entries are there for each country}
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 181 x 2
+## # Groups:   country [181]
+##    country         n
+##    <chr>       <int>
+##  1 Afghanistan    39
+##  2 Albania        39
+##  3 Algeria        39
+##  4 Angola         39
+##  5 Argentina      39
+##  6 Armenia        33
+##  7 Australia      39
+##  8 Austria        39
+##  9 Azerbaijan     33
+## 10 Bahrain        39
+## # i 171 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?}\FunctionTok{count}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#want: year when countries has worst GDP}
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{slice\_min}\NormalTok{(}\AttributeTok{order\_by=}\NormalTok{GDP, }\AttributeTok{n=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 341 x 5
+## # Groups:   country [181]
+##    country        ID  Year    GDP GDP_per_capita
+##    <chr>       <dbl> <dbl>  <dbl>          <dbl>
+##  1 Afghanistan    36  1994  1573.           0.85
+##  2 Albania        12  1992   995.           2.98
+##  3 Algeria       103  1988 22997.           8.83
+##  4 Angola        104  1984  3001.           3.06
+##  5 Argentina      37  1985 25577.           8.43
+##  6 Armenia       105  1994  1037.           3.12
+##  7 Australia      67  1984 42768.          25.6 
+##  8 Austria       144  1984 18343.          22.9 
+##  9 Azerbaijan    106  1996  2362.           2.91
+## 10 Bahrain       146  1986   726.          15.4 
+## # i 331 more rows
+\end{verbatim}
+
+\hypertarget{mutate-create-new-column}{%
+\subsubsection{8. mutate: create new
+column}\label{mutate-create-new-column}}
+
+\#doesn't change the number of rows
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# create a new column, takes the value of 1}
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{New=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,789 x 6
+##    country    ID  Year     GDP GDP_per_capita   New
+##    <chr>   <dbl> <dbl>   <dbl>          <dbl> <dbl>
+##  1 Mexico      3  1984  93563.           11.7     1
+##  2 Mexico      3  1985  94259.           11.5     1
+##  3 Mexico      3  1986  92750.           11.1     1
+##  4 Mexico      3  1987  93220.           10.9     1
+##  5 Mexico      3  1988  94687.           10.8     1
+##  6 Mexico      3  1989  98145.           11.0     1
+##  7 Mexico      3  1990 103254.           11.4     1
+##  8 Mexico      3  1991 107374.           11.6     1
+##  9 Mexico      3  1992 111533.           11.9     1
+## 10 Mexico      3  1993 114611.           12.0     1
+## # i 6,779 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{New=}\NormalTok{GDP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,789 x 6
+##    country    ID  Year     GDP GDP_per_capita     New
+##    <chr>   <dbl> <dbl>   <dbl>          <dbl>   <dbl>
+##  1 Mexico      3  1984  93563.           11.7  93563.
+##  2 Mexico      3  1985  94259.           11.5  94259.
+##  3 Mexico      3  1986  92750.           11.1  92750.
+##  4 Mexico      3  1987  93220.           10.9  93220.
+##  5 Mexico      3  1988  94687.           10.8  94687.
+##  6 Mexico      3  1989  98145.           11.0  98145.
+##  7 Mexico      3  1990 103254.           11.4 103254.
+##  8 Mexico      3  1991 107374.           11.6 107374.
+##  9 Mexico      3  1992 111533.           11.9 111533.
+## 10 Mexico      3  1993 114611.           12.0 114611.
+## # i 6,779 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{New=}\FunctionTok{log}\NormalTok{(GDP)}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,789 x 6
+##    country    ID  Year     GDP GDP_per_capita   New
+##    <chr>   <dbl> <dbl>   <dbl>          <dbl> <dbl>
+##  1 Mexico      3  1984  93563.           11.7  12.4
+##  2 Mexico      3  1985  94259.           11.5  12.5
+##  3 Mexico      3  1986  92750.           11.1  12.4
+##  4 Mexico      3  1987  93220.           10.9  12.4
+##  5 Mexico      3  1988  94687.           10.8  12.5
+##  6 Mexico      3  1989  98145.           11.0  12.5
+##  7 Mexico      3  1990 103254.           11.4  12.5
+##  8 Mexico      3  1991 107374.           11.6  12.6
+##  9 Mexico      3  1992 111533.           11.9  12.6
+## 10 Mexico      3  1993 114611.           12.0  12.6
+## # i 6,779 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#more complex situation:}
+\CommentTok{\#want: New column to be GDP relative to the average GDP in the world 1984{-}2022}
+
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{GDP\_over\_avg=}\NormalTok{GDP}\SpecialCharTok{/}\FunctionTok{mean}\NormalTok{(GDP,}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,789 x 6
+##    country    ID  Year     GDP GDP_per_capita GDP_over_avg
+##    <chr>   <dbl> <dbl>   <dbl>          <dbl>        <dbl>
+##  1 Mexico      3  1984  93563.           11.7         2.11
+##  2 Mexico      3  1985  94259.           11.5         2.13
+##  3 Mexico      3  1986  92750.           11.1         2.09
+##  4 Mexico      3  1987  93220.           10.9         2.10
+##  5 Mexico      3  1988  94687.           10.8         2.14
+##  6 Mexico      3  1989  98145.           11.0         2.21
+##  7 Mexico      3  1990 103254.           11.4         2.33
+##  8 Mexico      3  1991 107374.           11.6         2.42
+##  9 Mexico      3  1992 111533.           11.9         2.52
+## 10 Mexico      3  1993 114611.           12.0         2.59
+## # i 6,779 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#na.rm=true{-}{-}{-}to ignore NA}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#want: New column to be GDP relative to the average GDP of the country 1984{-}2022}
+
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{|\textgreater{}}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{GDP\_over\_avg=}\NormalTok{GDP}\SpecialCharTok{/} \FunctionTok{mean}\NormalTok{(GDP, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,789 x 6
+## # Groups:   country [181]
+##    country    ID  Year     GDP GDP_per_capita GDP_over_avg
+##    <chr>   <dbl> <dbl>   <dbl>          <dbl>        <dbl>
+##  1 Mexico      3  1984  93563.           11.7        0.624
+##  2 Mexico      3  1985  94259.           11.5        0.628
+##  3 Mexico      3  1986  92750.           11.1        0.618
+##  4 Mexico      3  1987  93220.           10.9        0.622
+##  5 Mexico      3  1988  94687.           10.8        0.631
+##  6 Mexico      3  1989  98145.           11.0        0.654
+##  7 Mexico      3  1990 103254.           11.4        0.688
+##  8 Mexico      3  1991 107374.           11.6        0.716
+##  9 Mexico      3  1992 111533.           11.9        0.744
+## 10 Mexico      3  1993 114611.           12.0        0.764
+## # i 6,779 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#country{-}year development level with reference to that of 1984.}
+\NormalTok{?first}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(Year) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{GDP\_over\_1984 =}\NormalTok{ GDP}\SpecialCharTok{/} \FunctionTok{first}\NormalTok{(GDP)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ungroup}\NormalTok{()}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(country,Year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,789 x 6
+##    country        ID  Year   GDP GDP_per_capita GDP_over_1984
+##    <chr>       <dbl> <dbl> <dbl>          <dbl>         <dbl>
+##  1 Afghanistan    36  1984 2723.          2.03          1    
+##  2 Afghanistan    36  1985 2690.          2.01          0.988
+##  3 Afghanistan    36  1986 2617.          1.97          0.961
+##  4 Afghanistan    36  1987 2471.          1.86          0.907
+##  5 Afghanistan    36  1988 2317.          1.73          0.851
+##  6 Afghanistan    36  1989 2173.          1.59          0.798
+##  7 Afghanistan    36  1990 2066.          1.46          0.759
+##  8 Afghanistan    36  1991 1953.          1.32          0.717
+##  9 Afghanistan    36  1992 1842.          1.16          0.676
+## 10 Afghanistan    36  1993 1676.          0.973         0.616
+## # i 6,779 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#year{-}on{-}year economic growth.}
+\CommentTok{\#?lag}
+
+\NormalTok{d\_gdp}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(country)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(Year)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{GDP\_yoy\_change=}\NormalTok{ GDP }\SpecialCharTok{{-}} \FunctionTok{lag}\NormalTok{(GDP,}\AttributeTok{n=}\DecValTok{1}\NormalTok{))}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ungroup}\NormalTok{()}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(country,Year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,789 x 6
+##    country        ID  Year   GDP GDP_per_capita GDP_yoy_change
+##    <chr>       <dbl> <dbl> <dbl>          <dbl>          <dbl>
+##  1 Afghanistan    36  1984 2723.          2.03            NA  
+##  2 Afghanistan    36  1985 2690.          2.01           -33.1
+##  3 Afghanistan    36  1986 2617.          1.97           -72.8
+##  4 Afghanistan    36  1987 2471.          1.86          -146. 
+##  5 Afghanistan    36  1988 2317.          1.73          -154. 
+##  6 Afghanistan    36  1989 2173.          1.59          -144. 
+##  7 Afghanistan    36  1990 2066.          1.46          -107. 
+##  8 Afghanistan    36  1991 1953.          1.32          -113. 
+##  9 Afghanistan    36  1992 1842.          1.16          -111. 
+## 10 Afghanistan    36  1993 1676.          0.973         -166. 
+## # i 6,779 more rows
+\end{verbatim}
+
+\hypertarget{summary}{%
+\subsubsection{9.summary}\label{summary}}
+
+\#change number of rows
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#data integrity check (find missing data)}
+\NormalTok{d\_gdp}\SpecialCharTok{|\textgreater{}}
+  \CommentTok{\#create a column that indicates whether the value is missing}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{GDP\_missing=} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(GDP)), }\AttributeTok{.after=}\NormalTok{GDP)}\SpecialCharTok{|\textgreater{}}
+           \FunctionTok{group\_by}\NormalTok{(country)}\SpecialCharTok{|\textgreater{}}
+           \FunctionTok{summarize}\NormalTok{(}\AttributeTok{N\_GDP\_missing=}\FunctionTok{sum}\NormalTok{(GDP\_missing))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 181 x 2
+##    country     N_GDP_missing
+##    <chr>               <dbl>
+##  1 Afghanistan             3
+##  2 Albania                 3
+##  3 Algeria                 3
+##  4 Angola                  3
+##  5 Argentina               3
+##  6 Armenia                 4
+##  7 Australia               3
+##  8 Austria                 3
+##  9 Azerbaijan              3
+## 10 Bahrain                 3
+## # i 171 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#.after=GDP{-}{-}put it after the GDP column}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#want: average GDP level of the world}
+\NormalTok{d\_gdp}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{gdp\_average =}\FunctionTok{mean}\NormalTok{(GDP, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{GDP\_per\_capita\_average=}\FunctionTok{mean}\NormalTok{(GDP\_per\_capita,}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##   gdp_average GDP_per_capita_average
+##         <dbl>                  <dbl>
+## 1      44324.                   13.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# average development level}
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(country)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{GDP\_average=}\FunctionTok{mean}\NormalTok{(GDP,}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{GDPpc\_average=}\FunctionTok{mean}\NormalTok{(GDP\_per\_capita, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 181 x 3
+##    country     GDP_average GDPpc_average
+##    <chr>             <dbl>         <dbl>
+##  1 Afghanistan       3374.          1.35
+##  2 Albania           2029.          6.33
+##  3 Algeria          35153.         10.1 
+##  4 Angola            8133.          4.07
+##  5 Argentina        53263.         13.2 
+##  6 Armenia           2163.          6.83
+##  7 Australia        83495.         38.3 
+##  8 Austria          31285.         35.6 
+##  9 Azerbaijan        8230.          8.72
+## 10 Bahrain           2493.         24.4 
+## # i 171 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#GDP growth and GDP per capita:comparing 2020 with 1984}
+\NormalTok{d\_gdp }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(Year}\SpecialCharTok{\textgreater{}=}\DecValTok{1984}\NormalTok{,Year}\SpecialCharTok{\textless{}=}\DecValTok{2019}\NormalTok{)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{GDP\_growth\_2019\_1984=}\NormalTok{(}\FunctionTok{last}\NormalTok{(GDP)}\SpecialCharTok{{-}}\FunctionTok{first}\NormalTok{(GDP))}\SpecialCharTok{/}\FunctionTok{first}\NormalTok{(GDP),}
+            \AttributeTok{GDP\_per\_capita\_2019\_1984=}\NormalTok{(}\FunctionTok{last}\NormalTok{(GDP\_per\_capita)}\SpecialCharTok{{-}}\FunctionTok{first}\NormalTok{(GDP\_per\_capita))}\SpecialCharTok{/}\FunctionTok{first}\NormalTok{(GDP\_per\_capita))}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ungroup}\NormalTok{()}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(country)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 181 x 3
+##    country     GDP_growth_2019_1984 GDP_per_capita_2019_1984
+##    <chr>                      <dbl>                    <dbl>
+##  1 Afghanistan                 1.49                   -0.142
+##  2 Albania                     1.84                    1.82 
+##  3 Algeria                     1.14                    0.118
+##  4 Angola                      4.64                    0.763
+##  5 Argentina                   2.03                    0.922
+##  6 Armenia                    NA                      NA    
+##  7 Australia                   1.98                    0.879
+##  8 Austria                     1.40                    1.02 
+##  9 Azerbaijan                  1.47                    0.766
+## 10 Bahrain                     5.50                    0.711
+## # i 171 more rows
+\end{verbatim}
+
+\hypertarget{final-note}{%
+\subsubsection{10. Final note}\label{final-note}}
+
+\# pipe ``\textbar\textgreater{}'' : to reduce the intermediate output
+
+\# ``\textbar\textgreater{}''(new version) and ``\%\textgreater\%''(can
+handle more complicated task)
 
 \end{document}
